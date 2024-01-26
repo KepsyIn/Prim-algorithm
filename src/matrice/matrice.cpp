@@ -15,7 +15,11 @@ Matrice::~Matrice() {
     delete[] data;
 }
 
-void Matrice::afficher() {
+void Matrice::init(){
+
+}
+
+void Matrice::print() {
     for (int i = 0; i < lignes; ++i) {
         for (int j = 0; j < col; ++j) {
             std::cout << data[i][j] << " ";

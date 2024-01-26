@@ -8,6 +8,7 @@ class Matrice {
     public:
         Matrice(int l, int c);
         ~Matrice();
-        void afficher();
+        void init();
+        void print();
         
 };
