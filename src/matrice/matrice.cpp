@@ -15,8 +15,10 @@ Matrice::~Matrice() {
     delete[] data;
 }
 
-void Matrice::init(){
-
+void Matrice::init(int l, int c, int val){
+    if(l <= lignes && c <= col){
+        data[l][c] = val;
+    }
 }
 
 void Matrice::print() {
