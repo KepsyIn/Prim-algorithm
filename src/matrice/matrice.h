@@ -1,5 +1,3 @@
-#pragma once
-
 class Matrice {
     private:
         int **data;
