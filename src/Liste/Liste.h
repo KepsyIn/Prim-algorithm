@@ -1,14 +1,30 @@
-#pragma once
-
 #include <iostream>
 
 //nœud de la liste
-template <typename T>
+template <typename T,int P>
 class Node {
     T data;
+    int priority;
     Node* next;
+public:
+    Node(T value) :  data(value), next(nullptr), priority(P) {};
+    
+    T getData() const{
+        return this->data;
+    }
 
-    Node(T value) : data(value), next(nullptr) {}
+    int getPriority() const{
+        return this->priority;
+    }
+
+    void setNext(Node* n){
+        this->next = n;
+    }
+
+    Node* getNext(){
+        return this->next;
+    }
+
 };
 
 // classe Liste
@@ -25,18 +41,18 @@ public:
             head = newNode;
         } else {
             Node<T>* temp = head;
-            while (temp->next != nullptr) {
-                temp = temp->next;
+            while (temp->getNext() != nullptr) {
+                temp = temp->getNext();
             }
-            temp->next = newNode;
+            temp->setNext(newNode);
         }
     }
 
     void printList() {
         Node<T>* temp = head;
         while (temp != nullptr) {
-            std::cout << temp->data << " ";
-            temp = temp->next;
+            std::cout << temp->getData() << " ";
+            temp = temp->getNext();
         }
         std::cout << std::endl;
     }
@@ -44,7 +60,7 @@ public:
     ~List() {
         Node<T>* temp = head;
         while (temp != nullptr) {
-            Node<T>* nextNode = temp->next;
+            Node<T>* nextNode = temp->getNext();
             delete temp;
             temp = nextNode;
         }
