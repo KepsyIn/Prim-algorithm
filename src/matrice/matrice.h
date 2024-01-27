@@ -1,5 +1,3 @@
-#pragma once
-
 class Matrice {
     private:
         int **data;
@@ -8,6 +6,7 @@ class Matrice {
     public:
         Matrice(int l, int c);
         ~Matrice();
-        void afficher();
+        void init(int l, int c, int val);
+        void print();
         
 };
