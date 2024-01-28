@@ -1,7 +1,7 @@
 #include <iostream>
 
 //nœud de la liste
-template <typename T,int P>
+template <typename T,int P=0>
 class Node {
     T data;
     int priority;
@@ -32,11 +32,14 @@ template <typename T>
 class List {
 private:
     Node<T>* head;
+    size_t size;
+
 public:
-    List() : head(nullptr) {}
+    List() : head(nullptr), size(0) {}
 
     void add(T value) {
         Node<T>* newNode = new Node<T>(value);
+        
         if (head == nullptr) {
             head = newNode;
         } else {
@@ -46,6 +49,42 @@ public:
             }
             temp->setNext(newNode);
         }
+
+        size++;
+    }
+
+    void add(T value, int priority ) {
+        Node<T,priority>* newNode = new Node<T,priority>(value);
+        
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node<T>* temp = head;
+            while (temp->getNext() != nullptr) {
+                temp = temp->getNext();
+            }
+            temp->setNext(newNode);
+        }
+        size++;
+    }
+
+    bool isEmpty(){
+        return ( this->head == nullptr );
+    }
+
+    T getHighest(){
+        
+    }
+
+    T operator[] (unsigned int index) const{
+        if( index >= size ) return;
+        Node<T>* temp = head;
+        while( index != 0 ){
+            if( temp == nullptr ) return;
+            temp = temp->getNext();
+            index--;
+        }
+        return temp->getData();
     }
 
     void printList() {
@@ -65,5 +104,9 @@ public:
             temp = nextNode;
         }
         head = nullptr;
+    }
+
+    size_t length(){
+        return this->size;
     }
 };
