@@ -63,7 +63,7 @@ public:
 
         while (temp != nullptr) {
             if ( temp->getPriority() > highest->getPriority() ) {
-                highestValue = temp;
+                highest = temp;
             }
             temp = temp->getNext();
         }

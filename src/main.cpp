@@ -5,10 +5,10 @@
 int main() {
 
     List<int> l;
-    l.add(2);
-    l.add(3);
 
     l.printList();
+     
+    std::cout << "highest : " << l.getHighest() << std::endl;
 
     List<int> b(l);
 
@@ -27,6 +27,6 @@ int main() {
 
     std::cout << "length l : ";
     std::cout << l.length() << std::endl;
-
+    
     return 0;
 }
