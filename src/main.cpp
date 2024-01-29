@@ -5,11 +5,13 @@ int main(int argc, char *argv[]) {
 
     GraphParser gp(argv[1]);
 
-    gp.parseToList();
+    //gp.parseToList();
     gp.parseToMat();
 
+    
+    gp.getMat().print();
+    
     std::cout << "-degree : " << gp.getDegree() << std::endl;
-
     for( List<int> l : gp.getAdj() ){
         std::cout << "-sommet : ";
         l.printList();

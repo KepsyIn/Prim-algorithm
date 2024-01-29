@@ -48,9 +48,11 @@ void GraphParser::parseToMat(){
     //lecture du degrés du graphe
     fileStream >> this->degree;
 
-    matrice mat(degree);
+    
 
     int number;
+
+    mat.createMatrice(this->degree);
 
     while (fileStream >> number) {
 
@@ -76,8 +78,6 @@ void GraphParser::parseToMat(){
     }
 
     fileStream.close();
-
-    mat.print();
 }
 
 List<List<int>>  GraphParser::getAdj() const{
@@ -86,4 +86,8 @@ List<List<int>>  GraphParser::getAdj() const{
 
 int GraphParser::getDegree() const{
     return this->degree;
+}
+
+matrice GraphParser::getMat() const{
+    return this->mat;
 }

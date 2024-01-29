@@ -2,10 +2,15 @@
 #include <iostream>
 
 matrice::matrice(int s) : size(s) {
+    createMatrice(s);
+};
+
+void matrice::createMatrice(int size){
     data = new int*[size];
     for(int i=0; i<size; i++){
         data[i] = new int[size];
     }
+    this->size = size;
     init();
 };
 
