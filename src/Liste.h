@@ -53,9 +53,7 @@ public:
 
     T getHighest(){
         if (isEmpty()) {
-        // La liste est vide, retourner une valeur par défaut (à adapter selon le type T)
-        // Dans cet exemple, on suppose que T est numérique, donc on retourne 0.
-        return T();
+            return T();
         }
 
         Node<T>* highest = head;
