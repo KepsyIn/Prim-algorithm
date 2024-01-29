@@ -1,16 +1,11 @@
 # ###################### FLAGS EXPLANATION ######################
 # #	
-# #	Wall : turns on many warnings, but not "all."
-# #	
-# #	Wextra : turns on even more warnings, but still not all.
-# #	
-# #	Wpedantic : Issue all the warnings demanded by strict ISO C++.
-# #	
-# #	Wduplicated-branches : warn if if-else branches have identical bodies.
-# #	
-# #	Wduplicated-cond : warn about duplicated conditions in an if-else-if chain.
-# #	
-# #	Wswitch-enum : warn when a switch on an enum type is missing one of the enums.
+# #	-Wall : turns on many warnings, but not "all."
+# #	-Wextra : turns on even more warnings, but still not all.
+# #	-Wpedantic : Issue all the warnings demanded by strict ISO C++.
+# #	-Wduplicated-branches : warn if if-else branches have identical bodies.
+# #	-Wduplicated-cond : warn about duplicated conditions in an if-else-if chain.
+# #	-Wswitch-enum : warn when a switch on an enum type is missing one of the enums.
 # #	
 # ###################### FLAGS EXPLANATION ######################
 
@@ -32,13 +27,12 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 # Generate a list of object file names by replacing .cpp with .o
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(BIN_DIR)/%.o,$(SRC_FILES))
 
-
 # Executable program name
-TARGET = a.out
+TARGET = prim
 
 # Default target compiles the program
 all: $(BIN_DIR) $(BIN_DIR)/$(TARGET)
-	mv $(BIN_DIR)/$(TARGET) prim
+	mv $(BIN_DIR)/$(TARGET) $(TARGET)
 
 # Create the bin/ directory only if it doesn't exist
 $(BIN_DIR):
@@ -47,7 +41,6 @@ $(BIN_DIR):
 # Compile the program
 $(BIN_DIR)/$(TARGET): $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJ_FILES)
-
 
 # Generic rule for creating object files
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp

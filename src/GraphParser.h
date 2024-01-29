@@ -2,17 +2,19 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "../Liste/Liste.h"
+#include "Liste.h"
+#include "matrice.h"
 
 class GraphParser {
 private:
     std::string filename;
     std::ifstream fileStream;
     List<List<int>> adjList;
-    int degres;
+    int degree;
 public:
     GraphParser(const std::string& filename) : filename(filename) {};
     void parse();
     void closeFile();
     List<List<int>> getAdj() const;
+    int getDegree() const;
 };

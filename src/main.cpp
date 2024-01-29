@@ -1,12 +1,16 @@
 #include <iostream>
-#include "Parser/GraphParser.h"
+#include "GraphParser.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 
-    GraphParser gp("../graph.txt");
+    GraphParser gp(argv[1]);
 
     gp.parse();
+
+    std::cout << "-degree : " << gp.getDegree() << std::endl;
+
     for( List<int> l : gp.getAdj() ){
+        std::cout << "-sommet : ";
         l.printList();
     }
 
