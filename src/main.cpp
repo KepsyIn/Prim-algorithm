@@ -1,10 +1,14 @@
-#include "matrice/matrice.h"
+#pragma once
 #include "Liste/Liste.h"
 
 int main() {
-    Matrice mat(3, 3);
-    mat.init(0, 5, 42);
-    mat.print();
+
+    List<int> l;
+    l.add(2);
+    l.add(3);
+
+    l.printList();
+
 
     return 0;
 }

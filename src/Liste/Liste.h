@@ -1,13 +1,14 @@
 #include <iostream>
 
 //nœud de la liste
-template <typename T,int P=0>
+template <typename T>
 class Node {
     T data;
     int priority;
     Node* next;
 public:
-    Node(T value) :  data(value), next(nullptr), priority(P) {};
+    Node(T value) :  data(value), next(nullptr), priority(0){};
+    Node(T value , int priority ) : data(value), next(nullptr), priority(priority) {};
     
     T getData() const{
         return this->data;
@@ -33,9 +34,22 @@ class List {
 private:
     Node<T>* head;
     size_t size;
-
+    bool flag_is_priority;
 public:
-    List() : head(nullptr), size(0) {}
+    List() : head(nullptr), size(0) , flag_is_priority(false) {}
+    
+    List(const List& l) {
+        
+        if( !(this->isEmpty()) ){
+            this->clear();
+        }
+
+        Node<T>* temp = l.head;
+
+        while( temp != nullptr ){
+            this->add(temp->getData(),temp->getPriority());
+        };
+    };
 
     void add(T value) {
         Node<T>* newNode = new Node<T>(value);
@@ -54,7 +68,7 @@ public:
     }
 
     void add(T value, int priority ) {
-        Node<T,priority>* newNode = new Node<T,priority>(value);
+        Node<T>* newNode = new Node<T>(value,priority);
         
         if (head == nullptr) {
             head = newNode;
@@ -68,12 +82,12 @@ public:
         size++;
     }
 
-    bool isEmpty(){
-        return ( this->head == nullptr );
+    size_t length(){
+        return this->size;
     }
 
-    T getHighest(){
-        
+    bool isEmpty(){
+        return ( this->head == nullptr );
     }
 
     T operator[] (unsigned int index) const{
@@ -85,6 +99,17 @@ public:
             index--;
         }
         return temp->getData();
+    }
+
+    void clear(){
+        Node<T>* temp = head;
+        while (temp != nullptr) {
+            Node<T>* nextNode = temp->getNext();
+            delete temp;
+            temp = nextNode;
+        };
+        head = nullptr;
+        size = 0;
     }
 
     void printList() {
@@ -106,7 +131,5 @@ public:
         head = nullptr;
     }
 
-    size_t length(){
-        return this->size;
-    }
+    
 };
