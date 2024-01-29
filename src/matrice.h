@@ -1,12 +1,11 @@
 class matrice {
     private:
         int **data;
-        int lignes;
-        int col;
+        int size;
     public:
-        matrice(int l, int c);
+        matrice(int s);
         ~matrice();
-        void init(int l, int c, int val);
+        void setVal(int l, int c, int val);
         void print();
         
 };

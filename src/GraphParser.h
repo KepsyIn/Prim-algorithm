@@ -14,6 +14,7 @@ private:
 public:
     GraphParser(const std::string& filename) : filename(filename) {};
     void parseToList();
+    void parseToMat();
     void closeFile();
     List<List<int>> getAdj() const;
     int getDegree() const;

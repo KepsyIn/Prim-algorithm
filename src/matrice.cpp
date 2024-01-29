@@ -1,29 +1,29 @@
 #include "matrice.h"
 #include <iostream>
 
-matrice::matrice(int l, int c) : lignes(l), col(c) {
-    data = new int*[lignes];
-    for(int i=0; i<lignes; i++){
-        data[i] = new int[col];
+matrice::matrice(int s) : size(s) {
+    data = new int*[size];
+    for(int i=0; i<size; i++){
+        data[i] = new int[size];
     }
 };
 
 matrice::~matrice() {
-    for (int i = 0; i < lignes; ++i) {
+    for (int i = 0; i < size; ++i) {
         delete[] data[i];
     }
     delete[] data;
 }
 
-void matrice::init(int l, int c, int val){
-    if(l <= lignes && c <= col){
+void matrice::setVal(int l, int c, int val){
+    if(l <= size && c <= size){
         data[l][c] = val;
     }
 }
 
 void matrice::print() {
-    for (int i = 0; i < lignes; ++i) {
-        for (int j = 0; j < col; ++j) {
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
             std::cout << data[i][j] << " ";
         }
         std::cout << std::endl;
