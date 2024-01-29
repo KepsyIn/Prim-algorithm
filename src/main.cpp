@@ -6,6 +6,7 @@ int main(int argc, char *argv[]) {
     GraphParser gp(argv[1]);
 
     gp.parseToList();
+    gp.parseToMat();
 
     std::cout << "-degree : " << gp.getDegree() << std::endl;
 

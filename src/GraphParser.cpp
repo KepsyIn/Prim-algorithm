@@ -2,8 +2,7 @@
 
 void GraphParser::parseToList(){
 
-    std::cout << "filename : " << this->filename << std::endl;
-
+    std::ifstream fileStream;
     fileStream.open(filename);
 
     if (!fileStream.is_open()) {
@@ -26,7 +25,6 @@ void GraphParser::parseToList(){
         } else {
             // on ne fait rien
             adjList.add(temp);
-            temp.printList();
             temp.clear();
         }
     }
@@ -36,9 +34,8 @@ void GraphParser::parseToList(){
 };
 
 void GraphParser::parseToMat(){
-
-    std::cout << "filename : " << this->filename << std::endl;
-
+    
+    std::ifstream fileStream;
     fileStream.open(filename);
 
     if (!fileStream.is_open()) {
@@ -46,21 +43,34 @@ void GraphParser::parseToMat(){
         return;
     }
 
-    int number;
-    int current;
-    int target;
-    int dist;
+    
 
     //lecture du degrés du graphe
     fileStream >> this->degree;
 
     matrice mat(degree);
 
-    while (fileStream >> current) {
-        if(current != 0){
-            fileStream >> target;
-            fileStream >> dist;
-            mat.setVal(current-1, target-1, dist);
+    int number;
+
+    while (fileStream >> number) {
+
+        int current;
+        int target;
+        int dist;
+
+        if( number != 0 ){
+            current = number;
+            while( number != 0 ){
+                fileStream >> number;
+                if( number != 0 ){
+                    target = number;
+                    fileStream >> number;
+                    if( number != 0 ){
+                        dist = number;
+                        mat.setVal(current-1,target-1,dist);
+                    }
+                }
+            }
         }
 
     }
@@ -69,10 +79,6 @@ void GraphParser::parseToMat(){
 
     mat.print();
 }
-
-void GraphParser::closeFile(){
-    fileStream.close();
-};
 
 List<List<int>>  GraphParser::getAdj() const{
     return this->adjList;
