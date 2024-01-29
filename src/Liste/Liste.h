@@ -159,6 +159,36 @@ public:
         head = nullptr;
     }
 
+    class Iterator {
+    private:
+        Node<T>* current;
+
+    public:
+        Iterator(Node<T>* node) : current(node) {}
+
+        T operator*() const {
+            return current->getData();
+        }
+
+        Iterator& operator++() {
+            if (current != nullptr) {
+                current = current->getNext();
+            }
+            return *this;
+        }
+
+        bool operator!=(const Iterator& other) const {
+            return current != other.current;
+        }
+    };
+
+    Iterator begin() const {
+        return Iterator(head);
+    }
+
+    Iterator end() const {
+        return Iterator(nullptr);
+    }
     
 };
 
