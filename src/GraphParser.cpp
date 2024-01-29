@@ -1,6 +1,6 @@
 #include "GraphParser.h"
 
-void GraphParser::parse(){
+void GraphParser::parseToList(){
 
     std::cout << "filename : " << this->filename << std::endl;
 
@@ -32,6 +32,7 @@ void GraphParser::parse(){
     }
 
     fileStream.close();
+
 };
 
 void GraphParser::closeFile(){

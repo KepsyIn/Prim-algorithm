@@ -13,7 +13,7 @@ private:
     int degree;
 public:
     GraphParser(const std::string& filename) : filename(filename) {};
-    void parse();
+    void parseToList();
     void closeFile();
     List<List<int>> getAdj() const;
     int getDegree() const;
