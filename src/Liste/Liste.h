@@ -38,18 +38,38 @@ private:
 public:
     List() : head(nullptr), size(0) , flag_is_priority(false) {}
     
-    List(const List& l) {
+    List(const List& l) : head(nullptr) , size(0) , flag_is_priority(false) {
         
-        if( !(this->isEmpty()) ){
-            this->clear();
-        }
+        this->clear();
 
-        Node<T>* temp = l.head;
+        Node<T>* temp = l.getHead();
 
         while( temp != nullptr ){
             this->add(temp->getData(),temp->getPriority());
+            temp = temp->getNext();
         };
+
     };
+
+    T getHighest(){
+        if (isEmpty()) {
+        // La liste est vide, retourner une valeur par défaut (à adapter selon le type T)
+        // Dans cet exemple, on suppose que T est numérique, donc on retourne 0.
+        return T();
+        }
+
+        Node<T>* highest = head;
+        Node<T>* temp = head->getNext();
+
+        while (temp != nullptr) {
+            if ( temp->getPriority() > highest->getPriority() ) {
+                highestValue = temp;
+            }
+            temp = temp->getNext();
+        }
+
+        return highest->getData();
+    }
 
     void add(T value) {
         Node<T>* newNode = new Node<T>(value);
@@ -67,7 +87,13 @@ public:
         size++;
     }
 
+    Node<T>* getHead() const{
+        return this->head;
+    }
+
     void add(T value, int priority ) {
+        if( priority > 0 ) this->flag_is_priority = true;
+
         Node<T>* newNode = new Node<T>(value,priority);
         
         if (head == nullptr) {
@@ -91,7 +117,7 @@ public:
     }
 
     T operator[] (unsigned int index) const{
-        if( index >= size ) return;
+        if( index >= size ) throw std::runtime_error("index out of bounds");
         Node<T>* temp = head;
         while( index != 0 ){
             if( temp == nullptr ) return;
@@ -103,11 +129,13 @@ public:
 
     void clear(){
         Node<T>* temp = head;
+
         while (temp != nullptr) {
             Node<T>* nextNode = temp->getNext();
             delete temp;
             temp = nextNode;
-        };
+        }
+
         head = nullptr;
         size = 0;
     }
@@ -133,3 +161,4 @@ public:
 
     
 };
+
