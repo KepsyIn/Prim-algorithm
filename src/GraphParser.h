@@ -12,7 +12,7 @@ private:
     int degree;
     matrice mat;
 public:
-    GraphParser(const std::string& filename) : filename(filename) {};
+    GraphParser(const std::string& filename) : filename(filename) , degree(0) {};
     void parseToList();
     void parseToMat();
     List<List<int>> getAdj() const;

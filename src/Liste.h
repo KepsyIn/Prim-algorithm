@@ -116,11 +116,11 @@ public:
 
         Node<T>* newNode = new Node<T>(value, priority);
 
-        if (head == nullptr || priority > head->getPriority()) {
+        if (head == nullptr || priority < head->getPriority()) {
             newNode->setNext(head);
             head = newNode;
         } else {
-            
+
             Node<T>* temp = head;
 
             while (temp->getNext() != nullptr && temp->getNext()->getPriority() <= priority) {

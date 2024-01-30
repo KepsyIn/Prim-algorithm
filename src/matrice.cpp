@@ -15,10 +15,12 @@ void matrice::createMatrice(int size){
 };
 
 matrice::~matrice() {
-    for (int i = 0; i < size; ++i) {
-        delete[] data[i];
+    if( size != 0 ){
+        for (int i = 0; i < size; ++i) {
+            delete[] data[i];
+        }
+        delete[] data;
     }
-    delete[] data;
 }
 
 void matrice::setVal(int l, int c, int val){

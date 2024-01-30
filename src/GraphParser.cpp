@@ -18,20 +18,28 @@ void GraphParser::parseToList(){
     List<int> temp;
 
     while (fileStream >> number) {
-        
-        if(number != 0) {
-            // ajout dans la liste
-            int poids;
 
-            fileStream >> poids;
+        int current;
+        int target;
+        int dist;
 
-            if( poids != 0 ){
-                
-                temp.add(number,poids);
-            }
+        if( number != 0 ){
+            current = number;
             
-        } else {
-            // on ne fait rien
+            while( number != 0 ){
+                fileStream >> number;
+                if( number != 0 ){
+                    target = number;
+                    fileStream >> number;
+                    if( number != 0 ){
+                        dist = number;
+                        temp.add(target,dist);
+                    }
+                } else {
+                    temp.add(current,0); // poids 0 parce que c'est eux même
+                }
+            }
+
             adjList.add(temp);
             temp.clear();
         }
