@@ -17,6 +17,9 @@ public:
     int getPriority() const{
         return this->priority;
     }
+    void setPriority(int p){
+        this->priority = p;
+    }
 
     void setNext(Node* n){
         this->next = n;
@@ -186,6 +189,61 @@ public:
             temp = nextNode;
         }
         head = nullptr;
+    }
+
+    void remove(T value) {
+        Node<T>* current = head;
+        Node<T>* previous = nullptr;
+
+        while (current != nullptr && current->getData() != value) {
+            previous = current;
+            current = current->getNext();
+        }
+
+        if (current == nullptr) {
+            throw std::runtime_error("Element not found in the list");
+        }
+
+        if (previous == nullptr) {
+            head = current->getNext();
+        } else {
+            previous->setNext(current->getNext());
+        }
+
+        delete current;
+        size--;
+    }
+
+    T getElement(int value){
+        Node<T>* temp = head;
+
+        while( temp != nullptr || temp->getData() != value){
+            temp = temp->getNext();
+        }
+        if(temp==nullptr){
+            throw std::runtime_error("index out of bounds");
+        }
+
+        return temp->getData();
+    }
+
+    void setPriorityElement(int index, int priority){
+        remove(index);
+        add(index, priority);
+    }
+
+    int getPriorityElement(int index){
+        if( index >= size ) throw std::runtime_error("index out of bounds");
+
+        Node<T>* temp = head;
+
+        while( index != 0 ){
+            if( temp == nullptr ) std::runtime_error("nothing to see there");
+            temp = temp->getNext();
+            index--;
+        }
+
+        return temp->getPriority();
     }
 
     class Iterator {
