@@ -21,7 +21,15 @@ void GraphParser::parseToList(){
         
         if(number != 0) {
             // ajout dans la liste
-            temp.add(number);
+            int poids;
+
+            fileStream >> poids;
+
+            if( poids != 0 ){
+                
+                temp.add(number,poids);
+            }
+            
         } else {
             // on ne fait rien
             adjList.add(temp);
@@ -43,12 +51,8 @@ void GraphParser::parseToMat(){
         return;
     }
 
-    
-
     //lecture du degrés du graphe
     fileStream >> this->degree;
-
-    
 
     int number;
 

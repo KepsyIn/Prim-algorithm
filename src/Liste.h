@@ -70,6 +70,8 @@ public:
     }
 
     void add(T value) {
+        if( this->flag_is_priority ) std::runtime_error("missing a priority argument");
+
         Node<T>* newNode = new Node<T>(value);
         
         if (head == nullptr) {
@@ -85,24 +87,50 @@ public:
         size++;
     }
 
+    T pop() {
+        if (isEmpty()) {
+            throw std::runtime_error("empty priority list");
+        }
+
+        Node<T>* temp = head;
+        T poppedValue = temp->getData();
+
+        head = head->getNext();
+        delete temp;
+        size--;
+
+        return poppedValue;
+    }
+
     Node<T>* getHead() const{
         return this->head;
     }
 
     void add(T value, int priority ) {
-        if( priority > 0 ) this->flag_is_priority = true;
-
-        Node<T>* newNode = new Node<T>(value,priority);
         
-        if (head == nullptr) {
+        if( isEmpty() ){
+            this->flag_is_priority = true;
+        }
+
+        if( !(isEmpty()) && !this->flag_is_priority ) std::runtime_error("this isn't a priority list");
+
+        Node<T>* newNode = new Node<T>(value, priority);
+
+        if (head == nullptr || priority > head->getPriority()) {
+            newNode->setNext(head);
             head = newNode;
         } else {
+            
             Node<T>* temp = head;
-            while (temp->getNext() != nullptr) {
+
+            while (temp->getNext() != nullptr && temp->getNext()->getPriority() <= priority) {
                 temp = temp->getNext();
             }
+
+            newNode->setNext(temp->getNext());
             temp->setNext(newNode);
         }
+
         size++;
     }
 
@@ -116,12 +144,15 @@ public:
 
     T operator[] (unsigned int index) const{
         if( index >= size ) throw std::runtime_error("index out of bounds");
+
         Node<T>* temp = head;
+
         while( index != 0 ){
-            if( temp == nullptr ) return;
+            if( temp == nullptr ) std::runtime_error("nothing to see there");
             temp = temp->getNext();
             index--;
         }
+
         return temp->getData();
     }
 
