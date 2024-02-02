@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
             int index = 1;
 
             for( List<int> l : result ){
-                for( int& x : l ){
-                    std::cout << x << "->" << ( index == s ) ? "_" : index << ":" << l.getPriorityElement(x) << std::endl;  
+                for( int x : l ){
+                    std::cout << x << "->" << ((index == s) ? "_" : std::to_string(index)) << ":" << l.getPriorityElement(x) << std::endl;  
                 };
                 index++;
             };
