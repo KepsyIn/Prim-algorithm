@@ -2,7 +2,7 @@
 /bin
 
 # graphe
-graph.txt
+graph*.txt
 
 # executable
 prim

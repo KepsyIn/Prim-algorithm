@@ -14,15 +14,6 @@ void matrice::createMatrice(int size){
     init();
 };
 
-matrice::~matrice() {
-    if( size != 0 ){
-        for (int i = 0; i < size; ++i) {
-            delete[] data[i];
-        }
-        delete[] data;
-    }
-}
-
 void matrice::setVal(int l, int c, int val){
     if(l <= size && c <= size){
         data[l][c] = val;

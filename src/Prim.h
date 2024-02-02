@@ -7,7 +7,7 @@ class Prim{
 public:
     Prim(int s) : sommet(s) {};
     List<List<int>> PrimL(GraphParser&);
-    // List<List<int>> PrimM(GraphParser&);
+    int* PrimM(GraphParser&);
     int getSommet(){return sommet;};
 
 };

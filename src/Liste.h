@@ -10,13 +10,14 @@ public:
     Node(T value) :  data(value), next(nullptr), priority(0){};
     Node(T value , int priority ) : data(value), next(nullptr), priority(priority) {};
     
-    T getData() const{
+    T& getData(){
         return this->data;
     }
 
     int getPriority() const{
         return this->priority;
     }
+    
     void setPriority(int p){
         this->priority = p;
     }
@@ -53,24 +54,6 @@ public:
         };
 
     };
-
-    T getHighest(){
-        if (isEmpty()) {
-            return T();
-        }
-
-        Node<T>* highest = head;
-        Node<T>* temp = head->getNext();
-
-        while (temp != nullptr) {
-            if ( temp->getPriority() > highest->getPriority() ) {
-                highest = temp;
-            }
-            temp = temp->getNext();
-        }
-
-        return highest->getData();
-    }
 
     void add(T value) {
         if( this->flag_is_priority ) std::runtime_error("missing a priority argument");
@@ -145,7 +128,7 @@ public:
         return ( this->head == nullptr );
     }
 
-    T operator[] (unsigned int index) const{
+    T& operator[] (unsigned int index) const{
         if( index >= size ) throw std::runtime_error("index out of bounds");
 
         Node<T>* temp = head;
@@ -159,6 +142,17 @@ public:
         return temp->getData();
     }
 
+    bool isInList( const T& value ){
+        Node<T>* temp = head;
+        while (temp != nullptr) {
+            if( temp->getData() == value ){
+                return true;
+            }
+            temp = temp->getNext();
+        }
+
+        return false;
+    }
     void clear(){
         Node<T>* temp = head;
 
@@ -201,7 +195,7 @@ public:
         }
 
         if (current == nullptr) {
-            throw std::runtime_error("Element not found in the list");
+            throw std::runtime_error("Element not found in the list" );
         }
 
         if (previous == nullptr) {
@@ -227,20 +221,28 @@ public:
         return temp->getData();
     }
 
-    void setPriorityElement(int index, int priority){
-        remove(index);
-        add(index, priority);
+    void setPriorityElement(int value, int priority){
+        remove(value);
+        add(value, priority);
     }
 
-    int getPriorityElement(int index){
-        if( index >= size ) throw std::runtime_error("index out of bounds");
-
+    int getPriorityElement(T value){
         Node<T>* temp = head;
 
-        while( index != 0 ){
-            if( temp == nullptr ) std::runtime_error("nothing to see there");
+        while( temp != nullptr ){
+
+            
+
+            if( temp->getData() == value ){
+                
+                break;
+            }
+            
             temp = temp->getNext();
-            index--;
+        }
+
+        if(temp==nullptr){
+            throw std::runtime_error("index out of bounds");
         }
 
         return temp->getPriority();

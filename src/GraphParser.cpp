@@ -35,9 +35,10 @@ void GraphParser::parseToList(){
                         dist = number;
                         temp.add(target,dist);
                     }
-                } else {
-                    temp.add(current,0); // poids 0 parce que c'est eux même
-                }
+                } 
+                // else {
+                //     temp.add(current,0); // poids 0 parce que c'est eux même
+                // }
             }
 
             adjList.add(temp);
@@ -47,6 +48,23 @@ void GraphParser::parseToList(){
 
     fileStream.close();
 
+
+    computeAdj();
+
+};
+
+void GraphParser::computeAdj(){
+    int indexCounter = 0;
+
+    for( List<int> l : adjList ){
+        for( const int& u : l ){
+            if( !adjList[u-1].isInList(indexCounter+1) ){
+                adjList[u-1].add(indexCounter + 1, adjList[indexCounter].getPriorityElement(u));
+            }
+        }
+
+        indexCounter++;
+    }
 };
 
 void GraphParser::parseToMat(){

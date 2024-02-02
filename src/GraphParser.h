@@ -11,6 +11,7 @@ private:
     List<List<int>> adjList;
     int degree;
     matrice mat;
+    void computeAdj();
 public:
     GraphParser(const std::string& filename) : filename(filename) , degree(0) {};
     void parseToList();

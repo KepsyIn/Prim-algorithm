@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 
     int s = std::stoi(argv[2]);
 
-    Prim p(s-1); // ne pas oublier de faire -1 sur le sommet
+    Prim p(s); // ne pas oublier de faire -1 sur le sommet
 
     List<List<int>> result = p.PrimL(gp);
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     int counter = 1;
 
     std::cout << std::endl;
-
+    
     for( List<int> l : result ){
         std::cout << "-sommet " << counter << " : ";
         l.printList();
