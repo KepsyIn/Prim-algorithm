@@ -1,0 +1,18 @@
+GRAPHE CONNEXE 
+sommet : 1 -> 10 : 7
+sommet : 2 -> __ : __
+sommet : 3 -> 2 : 6
+sommet : 4 -> 2 : 7
+sommet : 5 -> 13 : 5
+sommet : 6 -> 1 : 8
+sommet : 7 -> 5 : 5
+sommet : 8 -> 6 : 7
+sommet : 9 -> 15 : 5
+sommet : 10 -> 4 : 5
+sommet : 11 -> 6 : 5
+sommet : 12 -> 9 : 5
+sommet : 13 -> 3 : 5
+sommet : 14 -> 1 : 5
+sommet : 15 -> 1 : 5
+Coût total : 80
+temps CPU : 0

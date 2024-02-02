@@ -26,60 +26,21 @@ List<List<int>> Prim::PrimL(GraphParser& g){
     }
 
     F.setPriorityElement(sommet,tempPoids);
-
-    // cout.printList();
-    // F.printList();
-
-    // for( List<int> l : pred ){
-    //     std::cout << " - sommet : ";
-    //     l.printList(); 
-    // }
-
-    // std::cout << "adj " << std::endl;
-    // for( List<int> l : adj ){
-    //     std::cout << " - sommet : ";
-    //     l.printList(); 
-    // }
-
-    std::cout << " --- DEBUT DE L'ALGO --- " << std::endl;
-
-    // ============================================
-    //            MARIO N'OUBLIE PAS DE FAIRE -1
-    // ============================================
     while( !(F.isEmpty() ) ){
         int t = F.pop();
 
         for( const int& u : adj[t-1] ){
             if( F.isInList(u) ){
-                //std::cout << "yep t : " << t << " et u : " << u << std::endl;
-
                 int weight = cout.getPriorityElement(u);
-
-                //std::cout << "yep " << weight;
-
                 int weightUT;
-
                 if( adj[t-1].isInList(u)){
                     weightUT = adj[t-1].getPriorityElement(u);
                 }else{
                     weightUT = adj[u-1].getPriorityElement(t);
                 }
-
-                std::cout << t << "--" << weight << "," << weightUT << "-->" << u << std::endl;
-
-                //int weightUT = adj[t - 1].getPriorityElement(u);
-                //std::cout << "yep " << weight << " et " << weightUT << std::endl;
-
                 if( weight >= weightUT ){
-                    //if(!pred[u-1].isInList(t)){
-                        //pred[u-1].add(t);
-                    //}
-
                     pred[u-1].clear();
                     pred[u-1].add(t,weightUT);
-                    
-                    std::cout << "ajout" << std::endl;
-                    
                     cout.setPriorityElement(u,weightUT);
                     if( F.isInList(u) ) {
                         F.setPriorityElement(u,weightUT);
@@ -88,17 +49,23 @@ List<List<int>> Prim::PrimL(GraphParser& g){
             }
         }
     }
-
-
-
-
-    // for( List<int> l : pred ){
-    //     l.printList();
-    // }
-
+    isConnex(pred);
     return pred;
+}
 
+void Prim::isConnex(const List<List<int>>& list ) {
+    int index = 1;
 
+    for( List<int> l : list ){
+        if( l.isEmpty() && index != sommet ){
+            connex = false;
+        }
+        index++;
+    }
+}
+
+bool Prim::getConnex() const {
+    return this->connex;
 }
 
 int* Prim::PrimM(GraphParser& g){

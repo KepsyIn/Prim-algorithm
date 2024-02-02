@@ -1,7 +1,7 @@
-// #include <iostream>
-// #include "Prim.h"
+#include <iostream>
+#include "Prim.h"
 
-// int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 
 
 //     // List<int> p;
@@ -63,5 +63,5 @@
 //     }
 
 
-//     return 0;
-// }
+    return 0;
+}
