@@ -15,7 +15,7 @@ CXX = g++
 
 # Compilation options
 INCLUDESDIR = -I src/.
-CXXFLAGS = $(INCLUDESDIR) -Wall -Wextra -Wpedantic -Wduplicated-branches -Wduplicated-cond -Wswitch-enum
+CXXFLAGS = $(INCLUDESDIR)
 
 # Source and target directories
 SRC_DIR = src

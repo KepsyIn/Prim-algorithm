@@ -55,11 +55,6 @@ public:
 
     };
 
-    void updateValue( T value , T newValue , int priority ){
-        remove(value);
-        add(newValue,priority);
-    };
-
     void add(T value) {
         if( this->flag_is_priority ) std::runtime_error("missing a priority argument");
 
