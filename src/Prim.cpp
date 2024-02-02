@@ -52,6 +52,7 @@ List<List<int>> Prim::PrimL(GraphParser& g){
         for( const int& u : adj[t-1] ){
             if( F.isInList(u) ){
                 //std::cout << "yep t : " << t << " et u : " << u << std::endl;
+
                 int weight = cout.getPriorityElement(u);
 
                 //std::cout << "yep " << weight;
@@ -71,10 +72,14 @@ List<List<int>> Prim::PrimL(GraphParser& g){
 
                 if( weight >= weightUT ){
                     //if(!pred[u-1].isInList(t)){
-                        pred[u-1].add(t);
+                        //pred[u-1].add(t);
                     //}
+
+                    pred[u-1].clear();
+                    pred[u-1].add(t,weightUT);
                     
                     std::cout << "ajout" << std::endl;
+                    
                     cout.setPriorityElement(u,weightUT);
                     if( F.isInList(u) ) {
                         F.setPriorityElement(u,weightUT);
