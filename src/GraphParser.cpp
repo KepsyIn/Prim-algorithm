@@ -77,19 +77,13 @@ void GraphParser::parseToMat(){
         return;
     }
 
-    //lecture du degrés du graphe
     fileStream >> this->degree;
-
     int number;
-
     mat.createMatrice(this->degree);
-
     while (fileStream >> number) {
-
         int current;
         int target;
         int dist;
-
         if( number != 0 ){
             current = number;
             while( number != 0 ){
@@ -104,9 +98,7 @@ void GraphParser::parseToMat(){
                 }
             }
         }
-
     }
-
     fileStream.close();
 }
 

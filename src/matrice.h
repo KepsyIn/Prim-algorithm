@@ -16,6 +16,7 @@ class matrice {
         };
         void createMatrice(int size);
         void setVal(int l, int c, int val);
+        int getVal(int l, int c){return data[l][c];};
         void print();
         int* operator[](unsigned int index) const {
             if (index >= size) {

@@ -9,7 +9,7 @@ class Prim{
 public:
     Prim(int s) : sommet(s) , connex(true) {};
     List<List<int>> PrimL(GraphParser&);
-    int* PrimM(GraphParser&);
+    int** PrimM(GraphParser&);
     int getSommet(){return sommet;};
     bool getConnex() const;
     

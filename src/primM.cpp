@@ -1,67 +1,78 @@
 #include <iostream>
 #include "Prim.h"
+#include "chrono.h"
 
 int main(int argc, char *argv[]) {
+    if (argc > 2) {
+        GraphParser gp(argv[1]);
+        gp.parseToMat();
+        int s = std::stoi(argv[2]);
+        chrono chrono;
 
+        if (argc == 3) {
+            Prim p(s);
+            chrono.start();
+            int** result = p.PrimM(gp);
+            chrono.stop();
 
-//     // List<int> p;
+            int index = 1;
+            int coutTotal = 0;
+            std::cout << ((p.getConnex() ? "GRAPHE CONNEXE " : "GRAPHE PAS CONNEXE ")) << std::endl;
 
-//     // p.add(1,10);
-//     // p.add(2,40);
-//     // p.add(3,25);
-//     // p.add(4,50);
-//     // p.add(5,5);
-//     // p.add(6,55);
+            for (int i = 0; i < gp.getDegree(); i++) {
+                if (result[i][0] != -1) {
+                    int x = result[i][0];
+                    int cout = result[i][1];
+                    coutTotal += cout;
+                    std::cout << "sommet : " << index << " -> " << x << " : " << cout << std::endl;
+                } else {
+                    std::cout << "sommet : " << index << " -> __ : __" << std::endl;
+                }
+                index++;
+            }
 
-//     // std::cout << "[0] " << p[0] << std::endl;
-
-//     // std::cout << "[5] " << p[5] << std::endl;
-
-//     // p.printList();
-
-//     // p.setPriorityElement(6,49);
-//     // p.remove(6);
-//     // p.printList();
-//     // int head = p.pop();
-
-//     // std::cout << head << std::endl;
-//     // p.printList();
-   
-
-//     GraphParser gp(argv[1]);
-
-//     gp.parseToList();
-
-//     int s = std::stoi(argv[2]);
-
-//     Prim p(s); // ne pas oublier de faire -1 sur le sommet
-
-//     List<List<int>> result = p.PrimL(gp);
-
-    
-
-//     for( List<int> l : gp.getAdj() ){
-//         std::cout << "-sommet : ";
-//         l.printList();
-//     }
-
-//     // gp.parseToMat();
-
-    
-//     // matrice temp = gp.getMat();
-//     // temp.print();
-    
-//     // std::cout << "-degree : " << gp.getDegree() << std::endl;
-//     int counter = 1;
-
-//     std::cout << std::endl;
-    
-//     for( List<int> l : result ){
-//         std::cout << "-sommet " << counter << " : ";
-//         l.printList();
-//         counter++;
-//     }
-
+            std::cout << "Coût total : " << coutTotal << std::endl;
+            std::cout << "temps CPU : " << chrono.getTime() << std::endl;
+            for (int i = 0; i < gp.getDegree(); i++) {
+                delete[] result[i];
+            }
+            delete[] result;
+        } else if (argc == 4) {
+            std::string filename(argv[3]);
+            Prim p(s);
+            chrono.start();
+            int** result = p.PrimM(gp);
+            chrono.stop();
+            std::ofstream outputFile(filename);
+            if (outputFile.is_open()) {
+                int index = 1;
+                int coutTotal = 0;
+                outputFile << ((p.getConnex() ? "GRAPHE CONNEXE " : "GRAPHE PAS CONNEXE ")) << std::endl;
+                for (int i = 0; i < gp.getDegree(); i++) {
+                    if (result[i][0] != -1) {
+                        int x = result[i][0];
+                        int cout = result[i][1];
+                        coutTotal += cout;
+                        outputFile << "sommet : " << index << " -> " << x << " : " << cout << std::endl;
+                        } else {
+                            outputFile << "sommet : " << index << " -> __ : __" << std::endl;
+                        }
+                    index++;
+                }
+                outputFile << "Coût total : " << coutTotal << std::endl;
+                outputFile << "temps CPU : " << chrono.getTime() << std::endl;
+                outputFile.close();
+                std::cout << "Sortie écrite dans le fichier : " << filename << std::endl;
+            } else {
+                std::cerr << "Error: Unable to open file for writing: " << filename << std::endl;
+                return 1;
+            }
+            for (int i = 0; i < gp.getDegree(); i++) {
+                delete[] result[i];
+            }
+            delete[] result;
+        }
+    }
 
     return 0;
 }

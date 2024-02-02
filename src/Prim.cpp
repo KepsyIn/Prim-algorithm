@@ -68,33 +68,95 @@ bool Prim::getConnex() const {
     return this->connex;
 }
 
-int* Prim::PrimM(GraphParser& g){
+int** Prim::PrimM(GraphParser& g) {
     List<int> F;
     int deg = g.getDegree();
-    matrice adjMatrice = g.getMat();
+    matrice adjMatrice(deg);
+
+    for (int i = 0; i < deg; i++) {
+        for (int j = 0; j < deg; j++) {
+            adjMatrice.setVal(i, j, g.getMat()[i][j]);
+        }
+    }
+
+    int** result = new int*[deg];
     int* cout = new int[deg];
     int* pred = new int[deg];
-    for(int i = 0; i < deg; i++){
+
+    for (int i = 0; i < deg; i++) {
+        result[i] = new int[2];
         cout[i] = INT_MAX;
         pred[i] = -1;
     }
-    cout[sommet-1] = 0;
-    pred[sommet-1] = 0;
-    for(int i = 0; i < deg; i++){
+
+    cout[sommet - 1] = 0;
+    pred[sommet - 1] = 0;
+
+    for (int i = 0; i < deg; i++) {
         F.add(i);
     }
-    while(!(F.isEmpty())){
+
+    while (!F.isEmpty()) {
         int x = F.pop();
-        for(int y = 0; y < deg; y++){
-            if(adjMatrice[x][y] < cout[y] && adjMatrice[x][y] != 0){
-                cout[y] = adjMatrice[x][y];
-                pred[y] = x+1;
+        for (int y = 0; y < deg; y++) {
+            if (adjMatrice.getVal(x, y) < cout[y] && adjMatrice.getVal(x, y) != 0) {
+                cout[y] = adjMatrice.getVal(x, y);
+                pred[y] = x + 1;
             }
         }
     }
+
+    // Remplissage du tableau d'entiers result avec les données nécessaires
     for (int i = 0; i < deg; i++) {
-        std::cout << i+1 << " -> " << pred[i] << " : " << cout[i] << std::endl;
+        result[i][0] = pred[i];
+        result[i][1] = cout[i];
     }
 
-    return pred;
+    delete[] cout;
+    delete[] pred;
+
+    return result;
 }
+
+
+// int** Prim::PrimM(GraphParser& g) {
+//     List<int> F;
+//     int deg = g.getDegree();
+//     matrice adjMatrice(deg);
+//     for (int i = 0; i < deg; i++) {
+//         for (int j = 0; j < deg; j++) {
+//             adjMatrice.setVal(i, j, g.getMat()[i][j]);
+//         }
+//     }
+//     int** result = new int*[2];
+//     result[0] = new int[deg];
+//     result[1] = new int[deg];
+
+//     for (int i = 0; i < deg; i++) {
+//         result[0][i] = -1;
+//         result[1][i] = INT_MAX;
+//     }
+
+//     result[1][sommet - 1] = 0;
+//     result[0][sommet - 1] = 0;
+
+//     for (int i = 0; i < deg; i++) {
+//         F.add(i);
+//     }
+
+//     while (!(F.isEmpty())) {
+//         int x = F.pop();
+//         for (int y = 0; y < deg; y++) {
+//             if (adjMatrice.getVal(x, y) < result[1][y] && adjMatrice.getVal(x, y) != 0) {
+//                 result[1][y] = adjMatrice.getVal(x, y);
+//                 result[0][y] = x + 1;
+//             }
+//         }
+//     }
+
+//     for (int i = 0; i < deg; i++) {
+//         std::cout << i + 1 << " -> " << result[0][i] << " : " << result[1][i] << std::endl;
+//     }
+
+//     return result;
+// }
