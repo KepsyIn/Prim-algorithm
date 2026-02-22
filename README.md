@@ -1,4 +1,4 @@
-# PRIM_ALGO_AA
+# Prim algorithm C++
 
 ## Project Description
 
