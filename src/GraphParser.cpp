@@ -94,6 +94,7 @@ void GraphParser::parseToMat(){
                     if( number != 0 ){
                         dist = number;
                         mat.setVal(current-1,target-1,dist);
+                        mat.setVal(target-1,current-1,dist);  // Add bidirectional edge
                     }
                 }
             }
@@ -110,6 +111,6 @@ int GraphParser::getDegree() const{
     return this->degree;
 }
 
-matrice GraphParser::getMat() const{
+const matrice& GraphParser::getMat() const{
     return this->mat;
 }

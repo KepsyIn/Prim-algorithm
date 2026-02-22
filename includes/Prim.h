@@ -1,5 +1,7 @@
 #pragma once
 #include "GraphParser.h"
+#include "MSTResult.h"
+#include <fstream>
 
 class Prim{
 
@@ -8,8 +10,8 @@ class Prim{
     void isConnex(const List<List<int>>&);
 public:
     Prim(int s) : sommet(s) , connex(true) {};
-    List<List<int>> PrimL(GraphParser&);
-    int** PrimM(GraphParser&);
+    MSTResult PrimL(GraphParser&);
+    MSTResult PrimM(GraphParser&);
     int getSommet(){return sommet;};
     bool getConnex() const;
     

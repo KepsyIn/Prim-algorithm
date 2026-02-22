@@ -17,6 +17,6 @@ public:
     void parseToList();
     void parseToMat();
     List<List<int>> getAdj() const;
-    matrice getMat() const;
+    const matrice& getMat() const;
     int getDegree() const;
 };

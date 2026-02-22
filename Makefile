@@ -11,7 +11,7 @@ TARGETS = PrimL PrimM
 all: $(TARGETS)
 
 # Rule to build the targets
-PrimL: $(filter-out ./src/PrimM.cpp, $(SRCS))
+PrimL: $(filter-out ./src/primM.cpp, $(SRCS))
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LIBS)
 
 PrimM: $(filter-out ./src/PrimL.cpp, $(SRCS))

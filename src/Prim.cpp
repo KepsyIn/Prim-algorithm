@@ -1,7 +1,8 @@
 #include "Prim.h"
 #include <climits>
+#include <vector>
 
-List<List<int>> Prim::PrimL(GraphParser& g){
+MSTResult Prim::PrimL(GraphParser& g){
     
     List<List<int>> pred;
     List<int> F;
@@ -50,7 +51,26 @@ List<List<int>> Prim::PrimL(GraphParser& g){
         }
     }
     isConnex(pred);
-    return pred;
+    
+    // Build the result structure
+    MSTResult result;
+    result.predecessor.resize(degree);
+    result.weight.resize(degree);
+    result.isConnected = connex;
+    result.totalCost = 0;
+    
+    for (int i = 0; i < degree; i++) {
+        if (!pred[i].isEmpty()) {
+            result.predecessor[i] = pred[i][0];
+            result.weight[i] = pred[i].getPriorityElement(pred[i][0]);
+            result.totalCost += result.weight[i];
+        } else {
+            result.predecessor[i] = (i + 1 == sommet) ? 0 : -1;
+            result.weight[i] = 0;
+        }
+    }
+    
+    return result;
 }
 
 void Prim::isConnex(const List<List<int>>& list ) {
@@ -68,95 +88,64 @@ bool Prim::getConnex() const {
     return this->connex;
 }
 
-int** Prim::PrimM(GraphParser& g) {
-    List<int> F;
+MSTResult Prim::PrimM(GraphParser& g) {
     int deg = g.getDegree();
-    matrice adjMatrice(deg);
-
-    for (int i = 0; i < deg; i++) {
-        for (int j = 0; j < deg; j++) {
-            adjMatrice.setVal(i, j, g.getMat()[i][j]);
-        }
-    }
-
-    int** result = new int*[deg];
-    int* cout = new int[deg];
-    int* pred = new int[deg];
-
-    for (int i = 0; i < deg; i++) {
-        result[i] = new int[2];
-        cout[i] = INT_MAX;
-        pred[i] = -1;
-    }
-
-    cout[sommet - 1] = 0;
+    const matrice& adjMatrice = g.getMat();
+    
+    // Track which vertices are in MST
+    std::vector<bool> inMST(deg, false);
+    std::vector<int> pred(deg, -1);
+    std::vector<int> cost(deg, INT_MAX);
+    
+    // Start from the source vertex
+    cost[sommet - 1] = 0;
     pred[sommet - 1] = 0;
-
-    for (int i = 0; i < deg; i++) {
-        F.add(i);
-    }
-
-    while (!F.isEmpty()) {
-        int x = F.pop();
-        for (int y = 0; y < deg; y++) {
-            if (adjMatrice.getVal(x, y) < cout[y] && adjMatrice.getVal(x, y) != 0) {
-                cout[y] = adjMatrice.getVal(x, y);
-                pred[y] = x + 1;
+    
+    // Build MST
+    for (int count = 0; count < deg; count++) {
+        int u = -1;
+        
+        // Find minimum cost vertex not in MST
+        for (int v = 0; v < deg; v++) {
+            if (!inMST[v] && (u == -1 || cost[v] < cost[u])) {
+                u = v;
+            }
+        }
+        
+        if (u == -1 || cost[u] == INT_MAX) {
+            connex = false;  // Graph is not connected
+            break;
+        }
+        
+        inMST[u] = true;
+        
+        // Update costs for adjacent vertices
+        for (int v = 0; v < deg; v++) {
+            int weight = adjMatrice.getVal(u, v);
+            if (weight > 0 && !inMST[v] && weight < cost[v]) {
+                cost[v] = weight;
+                pred[v] = u + 1;  // Store 1-indexed vertex
             }
         }
     }
-
-    // Remplissage du tableau d'entiers result avec les données nécessaires
+    
+    // Build the result structure
+    MSTResult result;
+    result.predecessor.resize(deg);
+    result.weight.resize(deg);
+    result.isConnected = connex;
+    result.totalCost = 0;
+    
     for (int i = 0; i < deg; i++) {
-        result[i][0] = pred[i];
-        result[i][1] = cout[i];
+        if (cost[i] != INT_MAX) {
+            result.predecessor[i] = pred[i];
+            result.weight[i] = cost[i];
+            result.totalCost += result.weight[i];
+        } else {
+            result.predecessor[i] = -1;
+            result.weight[i] = 0;
+        }
     }
-
-    delete[] cout;
-    delete[] pred;
-
+    
     return result;
 }
-
-
-// int** Prim::PrimM(GraphParser& g) {
-//     List<int> F;
-//     int deg = g.getDegree();
-//     matrice adjMatrice(deg);
-//     for (int i = 0; i < deg; i++) {
-//         for (int j = 0; j < deg; j++) {
-//             adjMatrice.setVal(i, j, g.getMat()[i][j]);
-//         }
-//     }
-//     int** result = new int*[2];
-//     result[0] = new int[deg];
-//     result[1] = new int[deg];
-
-//     for (int i = 0; i < deg; i++) {
-//         result[0][i] = -1;
-//         result[1][i] = INT_MAX;
-//     }
-
-//     result[1][sommet - 1] = 0;
-//     result[0][sommet - 1] = 0;
-
-//     for (int i = 0; i < deg; i++) {
-//         F.add(i);
-//     }
-
-//     while (!(F.isEmpty())) {
-//         int x = F.pop();
-//         for (int y = 0; y < deg; y++) {
-//             if (adjMatrice.getVal(x, y) < result[1][y] && adjMatrice.getVal(x, y) != 0) {
-//                 result[1][y] = adjMatrice.getVal(x, y);
-//                 result[0][y] = x + 1;
-//             }
-//         }
-//     }
-
-//     for (int i = 0; i < deg; i++) {
-//         std::cout << i + 1 << " -> " << result[0][i] << " : " << result[1][i] << std::endl;
-//     }
-
-//     return result;
-// }
